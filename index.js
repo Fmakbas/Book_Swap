@@ -3,6 +3,7 @@ const Conversation = require("./models/Conversation");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -21,6 +22,9 @@ const io = new Server(server, {
 app.use(cors());
 app.use(express.json());
 
+// Static files (uploaded images)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Test endpoint
 app.get("/", (req, res) => {
   res.send("BookSwap backend çalışıyor!");
@@ -28,7 +32,7 @@ app.get("/", (req, res) => {
 
 // MongoDB bağlantısı
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -38,30 +42,44 @@ mongoose
 // Routes
 const userRoutes = require("./routes/userRoutes");
 const listingRoutes = require("./routes/listingRoutes");
+const tradeOfferRoutes = require("./routes/tradeOfferRoutes");
 const conversationRoutes = require("./routes/conversationRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 
 app.use("/api/users", userRoutes);
 app.use("/api/listings", listingRoutes);
+app.use("/api/offers", tradeOfferRoutes);
 app.use("/api/conversations", conversationRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/upload", uploadRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // Socket.IO bağlantısı
 io.on("connection", (socket) => {
   console.log("🔌 Yeni kullanıcı bağlandı:", socket.id);
+
+  // Kullanıcı authentication
+  socket.on("authenticate", ({ userId }) => {
+    socket.join(`user_${userId}`);
+    console.log(`Kullanıcı ${userId} authenticated ve room'a katıldı`);
+  });
 
   socket.on("joinRoom", ({ roomId }) => {
     socket.join(roomId);
     console.log(`Kullanıcı ${socket.id} oda ${roomId}'ye katıldı`);
   });
 
-  socket.on("sendMessage", async ({ roomId, senderId, text }) => {
+  socket.on("sendMessage", async ({ roomId, senderId, content }) => {
     try {
       // 1. Mesajı MongoDB'ye kaydet
       const newMessage = new Message({
         conversation: roomId,
         sender: senderId,
-        text,
+        content,
       });
 
       const savedMessage = await newMessage.save();
@@ -71,7 +89,7 @@ io.on("connection", (socket) => {
         _id: savedMessage._id,
         conversation: savedMessage.conversation,
         sender: senderId,
-        text: savedMessage.text,
+        content: savedMessage.content,
         createdAt: savedMessage.createdAt,
       });
     } catch (err) {
@@ -88,5 +106,8 @@ io.on("connection", (socket) => {
 server.listen(PORT, () => {
   console.log(`🚀 Sunucu ${PORT} portunda çalışıyor (Socket.IO ile)`);
 });
+
+// Socket.IO'yu global olarak erişilebilir yap
+global.io = io;
 
 module.exports = app;

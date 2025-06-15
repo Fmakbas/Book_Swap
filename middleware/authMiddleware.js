@@ -1,13 +1,18 @@
 const jwt = require("jsonwebtoken");
 
 function verifyToken(req, res, next) {
-  const token = req.header("Authorization");
+  const authHeader = req.header("Authorization");
 
-  if (!token) {
+  if (!authHeader) {
     return res.status(401).json({
       message: "Token bulunamadı, yetkisiz erişim!",
     });
   }
+
+  // "Bearer TOKEN" formatından sadece TOKEN kısmını al
+  const token = authHeader.startsWith("Bearer ") 
+    ? authHeader.slice(7) 
+    : authHeader;
 
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
