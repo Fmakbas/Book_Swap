@@ -21,7 +21,7 @@ Bu proje iki geliştirici tarafından birlikte yürütülmüştür:
 | İsim | Rolü | GitHub |
 |------|------|--------|
 | Fatih Akbaş | Back-End Developer<br>API tasarımı, veritabanı mimarisi, JWT auth, Socket.IO mesajlaşma | [@Fmakbas](https://github.com/Fmakbas) |
-| Ahmet Küçükkor | Front-End Developer<br>Kullanıcı arayüzü, sayfa akışı, stil tasarımı, API entegrasyonu | [@kucukkor](https://github.com/kucukkor) |
+| Ahmet Küçükkor | Front-End Developer<br>Kullanıcı arayüzü, sayfa akışı, stil tasarımı, API entegrasyonu,Docker ve Nginx yapılandırması | [@kucukkor](https://github.com/kucukkor) |
 
 ---
 
@@ -52,7 +52,6 @@ Bu proje iki geliştirici tarafından birlikte yürütülmüştür:
 - 🔐 İlan detayına sadece giriş yapmış kullanıcılar erişebilir
 - 💬 Gerçek zamanlı birebir sohbet (Socket.IO tabanlı)
 - 🔎 Kitap adına göre dinamik arama
-- 📱 Responsive tasarım (mobil uyumlu)
 
 ---
 
@@ -151,31 +150,31 @@ Bu komut:
 
 
 ### 1. Repository’yi Klonlayın
-\`\`\`bash
+```bash
 git clone https://github.com/Fmakbas/Book_Swap.git
 cd Book_Swap
-\`\`\`
+```
 
 ### 2. Ortam Değişkenlerini Ayarlayın
-\`/.env\` dosyası oluşturun ve aşağıdaki gibi doldurun:
-\`\`\`
+/.env\ dosyası oluşturun ve aşağıdaki gibi doldurun:
+```
 PORT=5000
 MONGO_URL=mongodb://localhost:27017/bookswap
 JWT_SECRET=your_jwt_secret_key
-\`\`\`
+```
 
 ### 3. Back-End'i Başlatın
-\`\`\`bash
+```bash
 npm install
 node index.js
-\`\`\`
+```
 
 ### 4. Front-End'i Başlatın
-\`\`\`bash
+```bash
 cd frontend
 npm install
 npm run dev
-\`\`\`
+```
 
 > Not: Frontend varsayılan olarak \`http://localhost:5173\`, backend ise \`http://localhost:5000\` üzerinde çalışır.
 
@@ -190,16 +189,6 @@ docker-compose up --build
 
 ---
 
-## 📸 Ekran Görüntüleri (isteğe bağlı)
-
-Eğer demo ekran görüntüleri yüklersen, aşağıya eklenebilir:
-
-\`\`\`
-📷 /test_images/test-image.png
-📷 /test_images/test-image2.png
-\`\`\`
-
----
 
 ## 🤝 Katkıda Bulunmak
 
