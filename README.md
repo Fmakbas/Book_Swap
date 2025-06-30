@@ -75,7 +75,80 @@ Book_Swap/
 
 ---
 
+
 ## ⚙️ Kurulum ve Çalıştırma
+
+### 1. Repository’yi Klonlayın
+```bash
+git clone https://github.com/Fmakbas/Book_Swap.git
+cd Book_Swap
+```
+
+---
+
+### 2. Ortam Değişkenlerini Ayarlayın
+
+Ana dizinde `.env` adında bir dosya oluşturun ve aşağıdaki bilgileri girin:
+
+```env
+PORT=5000
+MONGO_URL=mongodb://localhost:27017/bookswap
+JWT_SECRET=your_secret_key
+```
+
+> Not: `MONGO_URL` değeri eğer [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) kullanıyorsan değişmelidir.
+
+---
+
+### 3. Back-End'i Kurun ve Başlatın
+
+Ana dizindeyken:
+
+```bash
+npm install         # Gerekli Node.js bağımlılıklarını yükler
+npm start           # Express sunucusunu başlatır (veya nodemon index.js)
+```
+
+Sunucu çalıştıktan sonra API şu adreste aktif olur:  
+📡 `http://localhost:5000`
+
+---
+
+### 4. Front-End’i Kurun ve Başlatın
+
+Ayrı bir terminalde:
+
+```bash
+cd frontend
+npm install         # React bağımlılıkları
+npm run dev         # Vite ile geliştirme sunucusunu başlat
+```
+
+Arayüz şu adreste açılır:  
+🌐 `http://localhost:5173`
+
+---
+
+### 5. Giriş Yap ve Özellikleri Test Et
+
+- Yeni bir kullanıcı kaydı oluştur
+- Kitap ilanı ver
+- Gerçek zamanlı mesajlaşmayı dene (Socket.IO)
+
+---
+
+## 🐳 Docker ile Alternatif Kurulum (Opsiyonel)
+
+Eğer Docker yüklüyse:
+
+```bash
+docker-compose up --build
+```
+
+Bu komut:
+- MongoDB servislerini başlatır
+- Express backend’i ve React frontend’i ayağa kaldırır
+
 
 ### 1. Repository’yi Klonlayın
 \`\`\`bash
