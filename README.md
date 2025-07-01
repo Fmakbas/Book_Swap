@@ -55,25 +55,6 @@ Bu proje iki geliştirici tarafından birlikte yürütülmüştür:
 
 ---
 
-## 📁 Proje Yapısı
-
-\`\`\`bash
-Book_Swap/
-│
-├── frontend/               # React uygulaması
-├── models/                 # Mongoose modelleri
-├── routes/                 # API uçları
-├── services/               # İş mantığı ve veri işlemleri
-├── middleware/             # JWT, hata yönetimi vb.
-├── index.js                # Express sunucu başlangıç dosyası
-├── uploads/                # Yüklenen resimler
-├── docker-compose.yml      # Docker yapılandırması
-├── .env                    # Ortam değişkenleri (gizli tutulmalı)
-└── README.md               # Bu dökümantasyon
-\`\`\`
-
----
-
 
 ## ⚙️ Kurulum ve Çalıştırma
 
